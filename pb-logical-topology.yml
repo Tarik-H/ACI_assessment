@@ -241,12 +241,12 @@
       content: "{{ mcp.imdata }}"
       dest: "{{ data_dir }}mcp-output.json"
 
-  # - name: run my script!
-  #   command: ./mypythonscript.py
-  #   args:
-  #     chdir: "{{ role_path }}"/files
-  #   delegate_to: 127.0.0.1
-  #   run_once: true
+  - name: run excel report generation script
+    command: python logical-topology-convert-output.py
+    args:
+      # chdir: "{{ role_path }}"/files
+    delegate_to: 127.0.0.1
+    run_once: true
 
 
 # This is the end, my friend
