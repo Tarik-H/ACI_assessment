@@ -268,7 +268,7 @@
 
   - debug:
     msg: "Excel file doesn't exist!"
-  when: excel_file.stat.exists == False
+    when: excel_file.stat.exists == False
 
 
 # This is the end, my friend
