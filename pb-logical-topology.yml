@@ -6,8 +6,8 @@
 
   vars:
     data_dir: "./data/"
-    username: "{{apic_user}}"
-    password: "{{apic_pass}}"
+    # username: "{{apic_user}}"
+    # password: "{{apic_pass}}"
 
 
   tasks:
@@ -247,6 +247,17 @@
       # chdir: "{{ role_path }}"/files
     delegate_to: 127.0.0.1
     run_once: true
+
+  - name: Sending excel report via email
+    mail:
+     host: smtp.gmail.com
+     port: 587 
+     username: ramtarik@gmail.com
+     password: "{{pass_gmail}}"
+     to: "{{jobmail}}"
+     subject: ACI report
+     body: 'Attached is the ACI data gathering'
+     attach: ./data/output/aci-logical-topology.xlsx
 
 
 # This is the end, my friend
