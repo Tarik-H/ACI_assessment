@@ -6,6 +6,8 @@
 
   vars:
     data_dir: "./data/"
+    username: "{{username}}"
+    password: "{{password}}"
 
 
   tasks:
@@ -36,8 +38,8 @@
     aci_tenant:
       state: query
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
       use_proxy: no
     #no_log: true
@@ -57,8 +59,8 @@
     aci_vrf:
       state: query
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     #no_log: true
     register: out
@@ -78,8 +80,8 @@
     #aci_bd:
       state: query
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     no_log: true
     register: out
@@ -98,8 +100,8 @@
     aci_ap:
       state: query
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     no_log: true
     register: out
@@ -119,8 +121,8 @@
     #aci_epg:
       state: query
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     no_log: true
     register: out
@@ -136,8 +138,8 @@
     aci_rest:
       method: get
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
       path: /api/node/class/fvAEPg.json?rsp-subtree=children&rsp-subtree-class=fvRsBd,fvRsPathAtt,fvSubnet
     #no_log: true
@@ -158,8 +160,8 @@
       state: query
       contract_type: provider
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     # no_log: true
     register: out
@@ -179,8 +181,8 @@
       state: query
       contract_type: consumer
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
     # no_log: true
     register: out
@@ -197,8 +199,8 @@
   - name: Verify fabric settings 'Disable remote EP learning on Bleaf' and 'Enforce subnet check'
     aci_rest:
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
       method: get
       output_level: debug
@@ -212,8 +214,8 @@
   - name: Verify IP aging setting
     aci_rest:
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
       method: get
       output_level: debug
@@ -227,8 +229,8 @@
   - name: Verify MCP setting
     aci_rest:
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{username}}"
+      password: "{{password}}"
       validate_certs: no
       method: get
       output_level: debug
