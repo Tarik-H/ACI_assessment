@@ -255,20 +255,20 @@
 
   - name: Sending excel report via email
     mail:
-     host: smtp.gmail.com
-     port: 587
-     secure: starttls
-     username: ramtarik@gmail.com
-     password: "{{pass_gmail}}"
-     from: ramtarik@gmail.com
-     to: "{{jobmail}}"
-     subject: ACI report
-     body: 'Attached is the ACI data gathering'
-     attach: ./data/output/aci-logical-topology.xlsx
+       host: smtp.gmail.com
+       port: 587
+       # secure: starttls
+       username: ramtarik@gmail.com
+       password: "{{pass_gmail}}"
+       from: ramtarik@gmail.com
+       to: "{{jobmail}}"
+       subject: ACI report
+       body: 'Attached is the ACI data gathering'
+       attach: ./data/output/aci-logical-topology.xlsx
     when: excel_file.stat.exists == True
 
   - debug:
-    msg: "Excel file doesn't exist!"
+      msg: "Excel file doesn't exist!"
     when: excel_file.stat.exists == False
 
 
