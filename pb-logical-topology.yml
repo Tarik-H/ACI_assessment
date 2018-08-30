@@ -6,8 +6,8 @@
 
   vars:
     data_dir: "./data/"
-    username: "{{username}}"
-    password: "{{password}}"
+    username: "{{apic_user}}"
+    password: "{{apic_pass}}"
 
 
   tasks:
