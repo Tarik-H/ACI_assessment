@@ -247,9 +247,10 @@
       # chdir: "{{ role_path }}"/files
     delegate_to: 127.0.0.1
     run_once: true
-  
+
   - name: Verify the report file exists
-    stat: ./data/output/aci-logical-topology.xlsx
+    stat: 
+      path: ./data/output/aci-logical-topology.xlsx
     register: excel_file 
 
   - name: Sending excel report via email
