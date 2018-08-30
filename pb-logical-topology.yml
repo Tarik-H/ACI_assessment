@@ -3,8 +3,7 @@
   hosts: all
   connection: local
   gather_facts: no
-  vars_files:
-    - ./vars-aci-credentials.yml
+
   vars:
     data_dir: "./data/"
 
