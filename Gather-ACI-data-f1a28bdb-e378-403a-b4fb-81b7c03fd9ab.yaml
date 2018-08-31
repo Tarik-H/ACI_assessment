@@ -14,13 +14,11 @@
     name: apic_user
     required: true
     secure: true
-    storagePath: keys/devnet_aci_username
     valueExposed: true
   - label: Enter APIC password
     name: apic_pass
     required: true
     secure: true
-    storagePath: keys/lab_aci_password
     valueExposed: true
   - label: 'Enter the email address you would like to send to:'
     name: email
