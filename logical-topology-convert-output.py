@@ -1185,7 +1185,7 @@ for item in fabwide_settings_raw:
         if  key == 'enforceSubnetCheck':
             if  value == 'yes':
                 subnet_check = 'enabled'
-            else:
+            elif value == 'no':
                 subnet_check = 'disabled'
         elif 'enforceSubnetCheck' not in key:
             subnet_check = 'N/A'         

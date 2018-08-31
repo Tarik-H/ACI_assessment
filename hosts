@@ -1,4 +1,2 @@
 [all]
 localhost host=127.0.0.1
-#GO-SPINE-01  host=10.31.98.7  os=nxos  user=thoumaiz  password=
-#aci_lab host=172.28.46.32 os=aci
