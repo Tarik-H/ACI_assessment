@@ -252,6 +252,10 @@
     stat: 
       path: ./data/output/aci-logical-topology.xlsx
     register: excel_file 
+  
+  - debug:
+      msg: "Excel file doesn't exist!"
+    when: excel_file.stat.exists == False
 
   - name: Sending excel report via email
     mail:
@@ -266,9 +270,7 @@
        attach: ./data/output/aci-logical-topology.xlsx
     when: excel_file.stat.exists == True
 
-  - debug:
-      msg: "Excel file doesn't exist!"
-    when: excel_file.stat.exists == False
+
 
 
 # This is the end, my friend
