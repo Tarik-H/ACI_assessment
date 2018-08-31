@@ -1190,7 +1190,7 @@ for item in fabwide_settings_raw:
     if 'enforceSubnetCheck' not in item['infraSetPol']['attributes']:
         subnet_check = 'N/A'         
 print "content of remote ep is: {}".format(dis_remote_ep)
-print "content of enforce subnet check is: {}".format(subnet_check)
+#print "content of enforce subnet check is: {}".format(subnet_check)
 # with open(fabwide_settings_file) as fabwide_settings_data
 #     fabwide_settings_raw = json.load(fabwide_settings_data)
 
