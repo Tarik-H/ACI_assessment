@@ -24,7 +24,6 @@
     name: email
   - name: pass_gmail
     secure: true
-    storagePath: keys/gmail
     valueExposed: true
   scheduleEnabled: true
   sequence:
