@@ -263,7 +263,7 @@
        port: 587
        username: acidata01@gmail.com
        password: "{{pass_gmail}}"
-       from: ramtarik@gmail.com
+       from: acidata01@gmail.com
        to: "{{jobmail}}"
        subject: ACI report
        body: 'Attached is the ACI data gathering'
