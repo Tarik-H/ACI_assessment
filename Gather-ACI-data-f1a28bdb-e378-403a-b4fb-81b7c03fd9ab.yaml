@@ -25,7 +25,7 @@
   - label: (Optional)
     name: pass_gmail
     secure: true
-    storagePath: keys/gmail
+    storagePath: keys/insight/gmail
     valueExposed: true
   scheduleEnabled: true
   sequence:
