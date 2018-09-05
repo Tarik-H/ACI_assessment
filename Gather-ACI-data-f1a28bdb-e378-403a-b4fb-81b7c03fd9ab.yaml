@@ -22,8 +22,10 @@
     valueExposed: true
   - label: 'Enter the email address you would like to send to:'
     name: email
-  - name: pass_gmail
+  - label: (Optional)
+    name: pass_gmail
     secure: true
+    storagePath: keys/gmail
     valueExposed: true
   scheduleEnabled: true
   sequence:
