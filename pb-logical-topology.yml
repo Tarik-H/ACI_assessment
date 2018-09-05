@@ -261,7 +261,7 @@
     mail:
        host: smtp.gmail.com
        port: 587
-       username: ramtarik@gmail.com
+       username: acidata01@gmail.com
        password: "{{pass_gmail}}"
        from: ramtarik@gmail.com
        to: "{{jobmail}}"
