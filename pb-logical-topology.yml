@@ -241,6 +241,39 @@
       content: "{{ mcp.imdata }}"
       dest: "{{ data_dir }}mcp-output.json"
 
+
+  - name: Get a list OF L3outs
+    aci_rest:
+      method: get
+      hostname: "{{ apic_ip }}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      use_proxy: no
+      validate_certs: no
+      path: /api/node/class/l3extOut.json?rsp-subtree=full
+    #no_log: true
+    register: resultat
+
+  - copy: 
+      content: "{{ resultat.imdata }}" 
+      dest: "{{ data_dir }}l3outs-output.json"
+
+  - name: Get a list of Physical interfaces errors
+    aci_rest:
+      method: get
+      hostname: "{{ apic_ip }}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      use_proxy: no
+      validate_certs: no
+      path: /api/node/class/l1PhysIf.json?rsp-subtree=full&rsp-subtree-class=rmonDot3Stats,rmonEtherStats,rmonIpIn,rmonIfOut
+    #no_log: true
+    register: resultat
+
+  - copy: 
+      content: "{{ resultat.imdata }}"
+      dest: "{{ data_dir }}interf-errors-output.json"
+
   - name: run excel report generation script
     command: python logical-topology-convert-output.py
     args:

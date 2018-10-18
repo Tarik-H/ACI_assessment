@@ -10,7 +10,7 @@
 #####################
 #
 # list of packages that should be imported for this code to work
-import re,ast
+import re
 import pdb
 import json
 import copy
@@ -860,7 +860,6 @@ def create_excel(excel_file, tenants):
     ws2 = wb.add_worksheet('Tenant-AP-EPG-Ports')
     ws3 = wb.add_worksheet('Fabric-wide-Settings')
     ws4 = wb.add_worksheet('Tenant-L3Out')
-    ws5 = wb.add_worksheet('Layer1-interface')    
     format1 = wb.add_format({'bg_color': '#FFFFFF', 'border': 7})
     format2 = wb.add_format({'bg_color': '#F0F0F0', 'border': 7})
     cell_formats = [format1, format2]
@@ -875,7 +874,7 @@ def create_excel(excel_file, tenants):
     headline2 = ['Tenant Name','Tenant Desc','AP Name','AP Desc','EPG Name','EPG Desc','intra-EPG Isolated','EPG Assoc. BD', 'EPG Provider Contracts', 'EPG Consumer Contracts', 'EPG Subnet IPs', 'EPG Static Port', 'EPG Static Port Encap', 'EPG Static Port Primary Encap', 'EPG Static Port Mode']
     headline3 = ['Disable remote EP learning','Enforce subnet check', 'IP aging policy', 'MCP']
     headline4 = ['Tenant Name','VRF Name','L3Out Name', 'External EPG', 'Ext Subnets', 'Ext EPG Provider contract', 'Ext EPG Consumer contract', 'L3out Nodes', 'L3out node interf', 'Interfaces IPs', 'Nodes static routes']
-    headline5 = ['Interface','alignment errors','carrierSense errors','CRC errors','inPause frames','collisions','drop events','in hdrErrors','in discards','out errors','out discards']
+
 
     # write headline1
     for hl in headline1:
@@ -1005,6 +1004,8 @@ def create_excel(excel_file, tenants):
         ws3.write(row, col, hl)
         col += 1
 
+    #ws3.write(1, 2, ipaging, green_cell)
+    # ws3.write(1, 3, mcp)
     def conditionals(setting, condition1, condition2, row_num, column):
         if setting == condition1:
            ws3.write(row_num, column, setting, green_cell)
@@ -1030,98 +1031,9 @@ def create_excel(excel_file, tenants):
     line_index_old = ''
     format_sel = 0
     loop_format = cell_formats[format_sel]
-    for hl in headline4:
-        ws4.write(row, col, hl)
+    for hl in headline2:
+        ws2.write(row, col, hl)
         col += 1
-    # pprint(l3outs)
-
-    for uo in l3outs:
-        if 'networks' in uo:
-           if not uo['networks']:
-              uo['networks'] = '0'
-        for out in uo['networks']:
-            line_index = '' + getValue(uo, 'l3out_tenant') + getValue(uo, 'l3out_vrf') + getValue(uo, 'l3out_name')
-            if line_index != line_index_old:
-               format_sel = toggle_value(format_sel)
-               loop_format = cell_formats[format_sel]
-               line_index_old = line_index
-            row += 1
-            col = 0
-            ws4.write(row, col, getValue(uo, 'l3out_tenant'), loop_format)
-            col += 1
-            ws4.write(row, col, getValue(uo, 'l3out_vrf'), loop_format)
-            col += 1
-            ws4.write(row, col, getValue(uo, 'l3out_name'), loop_format)
-            col += 1
-            ws4.write(row, col, getValue(out, 'l3out_ext_epg'), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(out, encoding='ascii')), 'subnets')), loop_format)
-            col += 1    
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(out, encoding='ascii')), 'ext_epg_prov_contr')), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(out, encoding='ascii')), 'ext_epg_cons_contr')), loop_format)
-            col += 1
-            ws4.write(row, col, getValue(uo, 'l3out_protocol'), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(uo, encoding='ascii')), 'nodes_profiles')), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(uo, encoding='ascii')), 'nodes_interfaces')), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(uo, encoding='ascii')), 'nodes_interfaces_ips')), loop_format)
-            col += 1
-            ws4.write(row, col, str(getValue(ast.literal_eval(json.dumps(uo, encoding='ascii')), 'nodes_static_rts')), loop_format)
-            col += 1
-    # set column width to 25 and apply auto-filter
-    ws4.set_column(0, col, 25)
-    ws4.autofilter(0, 0, row, col-1)
-    ws4.freeze_panes(1, 1)
-
-    # write headline5
-    row = 0
-    col = 0
-    line_index = ''
-    line_index_old = ''
-    format_sel = 0
-    loop_format = cell_formats[format_sel]
-    for hl in headline5:
-        ws5.write(row, col, hl)
-        col += 1
-
-
-    for uo in l1interfs:
-            line_index = '' + getValue(uo, 'intrf') + getValue(uo, 'alignmentErrors')
-            if line_index != line_index_old:
-               format_sel = toggle_value(format_sel)
-               loop_format = cell_formats[format_sel]
-               line_index_old = line_index
-            row += 1
-            col = 0
-            ws5.write(row, col, getValue(uo, 'intrf'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'alignmentErrors'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'carrierSenseErrors'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'crc'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'inPauseFrames'), loop_format)
-            col += 1    
-            ws5.write(row, col, getValue(uo, 'collisions'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'dropEvents'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'in_hdrErrors'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'in_discards'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'out_Errors'), loop_format)
-            col += 1
-            ws5.write(row, col, getValue(uo, 'out_discards'), loop_format)
-            col += 1
-    # set column width to 25 and apply auto-filter
-    ws5.set_column(0, col, 25)
-    ws5.autofilter(0, 0, row, col-1)
-    ws5.freeze_panes(1, 1)
 
 
 
@@ -1147,8 +1059,7 @@ uniOutsVrf = {}         # dict of universal output dicts for VRF tree, containin
 uniOutsAp = {}          # dict of universal output dicts for AP tree, containg Tenant, AP, EPG, Static Ports
 
 l3outs = []             # Container for L3outs data
-prt = ['ospfExtP', 'bgpExtP' , 'eigrpExtP']   # List of protocols
-l1interfs = []          # container of L1 interfaces data
+prt = ['ospfExtP', 'bgpExtP' , 'eigrpExtP']   # List if protocols
 
 #data_dir = "/data/ansible/aci-logical-topology/"+environment+"/data/"
 data_dir = "./data/"
@@ -1163,8 +1074,6 @@ static_port_file = data_dir + "static-ports-output.json"
 fabwide_settings_file = data_dir + "fabricwide-settings-output.json"
 ipaging_file = data_dir + "ipaging-output.json"
 mcp_file = data_dir + "mcp-output.json"
-l3outs_file = data_dir + "l3outs-output.json"
-l1interf_file = data_dir + "interf-errors-output.json"
 
 excel_file = data_dir +"/" + environment + "/" + "aci-logical-topology.xlsx"
 consistency_file = data_dir +"/" + environment + "/" + "aci-consistency-check.txt"
@@ -1313,7 +1222,7 @@ print "content of remote ep is: {}".format(dis_remote_ep)
 
 ################  L3Out data parsing
 #
-
+l3outs_file = "l3outs-output.json"
 with open(l3outs_file) as l3out_data:
     l3out_raw = json.load(l3out_data)
 
@@ -1323,9 +1232,9 @@ for index, item in enumerate(l3out_raw):
     l3out_tenant = l3out_tn_tmp.group(1)
     l3outs.append({ "l3out_name": l3out_name})
     l3outs[index].update({"l3out_tenant": l3out_tenant})
-    l3outs[index].update({"networks": []}) ####
-    l3outs[index].update({"nodes_profiles": []}) ####
-    l3outs[index].update({"nodes_static_rts": []}) ####
+    l3outs[index].update({"networks": []}) #### List of External EPGs
+    l3outs[index].update({"nodes_profiles": []}) #### list of the L3outs node profiles
+    l3outs[index].update({"nodes_static_rts": []}) #### List of static routes
     for internal in item['l3extOut']['children']:
         if 'l3extRsEctx' in internal:
            l3out_vrf = dpath.util.get(internal, "l3extRsEctx/attributes/tnFvCtxName")   
@@ -1338,9 +1247,7 @@ for index, item in enumerate(l3out_raw):
            l3out_ext_epg = dpath.util.get(internal, 'l3extInstP/attributes/name')
            ext_epg_prov_contr = dpath.util.values(internal, 'l3extInstP/children/*/fvRsProv/attributes/tDn')
            ext_epg_cons_contr = dpath.util.values(internal, 'l3extInstP/children/*/fvRsCons/attributes/tDn')
-           
            l3outs[index]["networks"].append({"l3out_ext_epg": l3out_ext_epg, "subnets": subnet, "ext_epg_prov_contr": ext_epg_prov_contr, "ext_epg_cons_contr": ext_epg_cons_contr})
-           
         if 'l3extLNodeP' in internal:
            nodes_name = dpath.util.get(internal, '*/attributes/name')
            nodes_intf = dpath.util.values(internal, '*/children/*/l3extLIfP/children/*/l3extRsPathL3OutAtt/attributes/tDn')
@@ -1354,35 +1261,13 @@ for index, item in enumerate(l3out_raw):
                if 'l3extRsNodeL3OutAtt' in i:
                   for d in i['l3extRsNodeL3OutAtt']['children']:
                       if 'ipRouteP' in d:
-                         # print d['ipRouteP']['attributes']['ip']
                          for n in d['ipRouteP']['children']:
                              if 'ipNexthopP' in n:
-                                # print n['ipNexthopP']['attributes']['nhAddr']
-                                # print '{} NHP {}'.format(d['ipRouteP']['attributes']['ip'], n['ipNexthopP']['attributes']['nhAddr'])
                                 l3outs[index]['nodes_static_rts'].append(d['ipRouteP']['attributes']['ip']+'-NHP-'+n['ipNexthopP']['attributes']['nhAddr'])
         for prt in ['ospfExtP', 'bgpExtP' , 'eigrpExtP']:
             if prt in internal:
                node_protocol = dpath.util.get(internal, '*ExtP/attributes/name')
                l3outs[index].update({"l3out_protocol": node_protocol})
-        
-################  L1 interfaces data parsing
-#
-with open(l1interf_file) as l1interf_data:
-    l1interf_raw = json.load(l1interf_data)
-
-for index, item in enumerate(l1interf_raw):
-    interf_name = dpath.util.get(item, "l1PhysIf/attributes/dn")
-    alignmentErrors = dpath.util.get(item, "l1PhysIf/children/*/rmonDot3Stats/attributes/alignmentErrors")
-    carrierSenseErrors = dpath.util.get(item, "l1PhysIf/children/*/rmonDot3Stats/attributes/carrierSenseErrors")
-    crcErrors = dpath.util.get(item, "l1PhysIf/children/*/rmonDot3Stats/attributes/fCSErrors")
-    inPauseFrames = dpath.util.get(item, "l1PhysIf/children/*/rmonDot3Stats/attributes/inPauseFrames")
-    collisions = dpath.util.get(item, "l1PhysIf/children/*/rmonEtherStats/attributes/collisions")
-    dropEvents = dpath.util.get(item, "l1PhysIf/children/*/rmonEtherStats/attributes/dropEvents")
-    in_hdrErrors = dpath.util.get(item, "l1PhysIf/children/*/rmonIpIn/attributes/hdrErrors")
-    in_discards = dpath.util.get(item, "l1PhysIf/children/*/rmonIpIn/attributes/discards")
-    out_Errors = dpath.util.get(item, "l1PhysIf/children/*/rmonIfOut/attributes/errors")
-    out_discards = dpath.util.get(item, "l1PhysIf/children/*/rmonIfOut/attributes/discards")
-    l1interfs.append({ "intrf": interf_name, "alignmentErrors": alignmentErrors, "carrierSenseErrors": carrierSenseErrors, "crc": crcErrors, "inPauseFrames":inPauseFrames, "collisions": collisions, "dropEvents": dropEvents, "in_hdrErrors": in_hdrErrors, "in_discards": in_discards, "out_Errors": out_Errors, "out_discards": out_discards})
 
 #print "content of enforce subnet check is: {}".format(subnet_check)
 # with open(fabwide_settings_file) as fabwide_settings_data
