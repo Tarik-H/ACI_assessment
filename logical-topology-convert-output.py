@@ -874,7 +874,7 @@ def create_excel(excel_file, tenants):
     headline1 = ['Tenant Name','Tenant Desc','VRF Name','VRF Desc','BD Name','BD Desc','BD Broadcast IP','BD ARP Flood','BD unkMacUcastAct','BD Limit IP learning','BD unkMcastAct','BD Unicast Routing','BD multiDstPktAct','BD Subnet IPs']
     headline2 = ['Tenant Name','Tenant Desc','AP Name','AP Desc','EPG Name','EPG Desc','intra-EPG Isolated','EPG Assoc. BD', 'EPG Provider Contracts', 'EPG Consumer Contracts', 'EPG Subnet IPs', 'EPG Static Port', 'EPG Static Port Encap', 'EPG Static Port Primary Encap', 'EPG Static Port Mode']
     headline3 = ['Disable remote EP learning','Enforce subnet check', 'IP aging policy', 'MCP']
-    headline4 = ['Tenant Name','VRF Name','L3Out Name', 'External EPG', 'Ext Subnets', 'Ext EPG Provider contract', 'Ext EPG Consumer contract', 'L3out Nodes', 'L3out node interf', 'Interfaces IPs', 'Nodes static routes']
+    headline4 = ['Tenant Name','VRF Name','L3Out Name', 'External EPG', 'Ext Subnets', 'Ext EPG Provider contract', 'Ext EPG Consumer contract','Protocol','L3out Nodes', 'L3out node interf', 'Interfaces IPs', 'Nodes static routes']
     headline5 = ['Interface','alignment errors','carrierSense errors','CRC errors','inPause frames','collisions','drop events','in hdrErrors','in discards','out errors','out discards']
 
     # write headline1
@@ -1203,7 +1203,6 @@ for item in tenants_raw:
     # tenants.append(temp_tenant)
     tenants[temp_tenant.getDn()] = temp_tenant
 
-print "Tenant lits: {}".format(tenants[temp_tenant.getDn()])
 
 with open(vrf_file) as vrf_data:
     vrfs_raw = json.load(vrf_data)
@@ -1241,7 +1240,7 @@ for item in aps_raw:
 
 with open(epg_file) as epg_data:
     epgs_raw = json.load(epg_data)
-print epgs_raw
+
 for item in epgs_raw:
     temp_epg = MyEpg(item['fvAEPg']['attributes'])
     for child in item['fvAEPg']['children']:
@@ -1352,14 +1351,15 @@ for index, item in enumerate(l3out_raw):
            l3outs[index].update({"nodes_interfaces_ips": nodes_intf_ips})
            for i in internal['l3extLNodeP']['children']:
                if 'l3extRsNodeL3OutAtt' in i:
-                  for d in i['l3extRsNodeL3OutAtt']['children']:
-                      if 'ipRouteP' in d:
-                         # print d['ipRouteP']['attributes']['ip']
-                         for n in d['ipRouteP']['children']:
-                             if 'ipNexthopP' in n:
-                                # print n['ipNexthopP']['attributes']['nhAddr']
-                                # print '{} NHP {}'.format(d['ipRouteP']['attributes']['ip'], n['ipNexthopP']['attributes']['nhAddr'])
-                                l3outs[index]['nodes_static_rts'].append(d['ipRouteP']['attributes']['ip']+'-NHP-'+n['ipNexthopP']['attributes']['nhAddr'])
+                  if 'children' in i['l3extRsNodeL3OutAtt']:
+                      for d in i['l3extRsNodeL3OutAtt']['children']:
+                          if 'ipRouteP' in d:
+                             # print d['ipRouteP']['attributes']['ip']
+                             for n in d['ipRouteP']['children']:
+                                 if 'ipNexthopP' in n:
+                                    # print n['ipNexthopP']['attributes']['nhAddr']
+                                    # print '{} NHP {}'.format(d['ipRouteP']['attributes']['ip'], n['ipNexthopP']['attributes']['nhAddr'])
+                                    l3outs[index]['nodes_static_rts'].append(d['ipRouteP']['attributes']['ip']+'-NHP-'+n['ipNexthopP']['attributes']['nhAddr'])
         for prt in ['ospfExtP', 'bgpExtP' , 'eigrpExtP']:
             if prt in internal:
                node_protocol = dpath.util.get(internal, '*ExtP/attributes/name')
