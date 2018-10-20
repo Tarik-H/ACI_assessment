@@ -1294,7 +1294,12 @@ print "content of mcp is: {}".format(mcp)
 with open(fabwide_settings_file) as fabwide_settings_data:
     fabwide_settings_raw = json.load(fabwide_settings_data)
 
+if 'infraSetPol' not in infraSetPol:
+   subnet_check = 'N/A'
+   dis_remote_ep = 'N/A'
 for item in fabwide_settings_raw:    
+    if 'enforceSubnetCheck' not in item['infraSetPol']['attributes']:
+        subnet_check = 'N/A'
     for key, value in item['infraSetPol']['attributes'].iteritems():
         if  key == 'unicastXrEpLearnDisable':
             if value == 'yes':
@@ -1307,7 +1312,7 @@ for item in fabwide_settings_raw:
             elif value == 'no':
                 subnet_check = 'disabled'
     if 'enforceSubnetCheck' not in item['infraSetPol']['attributes']:
-        subnet_check = 'N/A'         
+        subnet_check = 'N/A'       
 print "content of remote ep is: {}".format(dis_remote_ep)
 
 ################  L3Out data parsing

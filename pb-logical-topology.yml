@@ -195,21 +195,27 @@
       dest: "{{ data_dir }}consumer-contracts-output.json"
 
 
-
   - name: Verify fabric settings 'Disable remote EP learning on Bleaf' and 'Enforce subnet check'
     aci_rest:
       host: "{{apic_ip}}"
-      username: "{{apic_user}}"
-      password: "{{apic_pass}}"
+      username: "{{ username }}"
+      password: "{{ password }}"
       validate_certs: no
       method: get
       output_level: debug
       path: /api/node/mo/uni/infra/settings.json
     register: fabsettings
+    ignore_errors: yes
 
   - copy:
       content: "{{ fabsettings.imdata }}"
       dest: "{{ data_dir }}fabricwide-settings-output.json"
+    when: "'Error' not in fabsettings.response"
+
+  - copy:
+      content: '[]'
+      dest: "{{ data_dir }}fabricwide-settings-output.json"
+    when: "'Error' in fabsettings.response"
 
   - name: Verify IP aging setting
     aci_rest:
