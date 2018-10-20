@@ -1294,7 +1294,7 @@ print "content of mcp is: {}".format(mcp)
 with open(fabwide_settings_file) as fabwide_settings_data:
     fabwide_settings_raw = json.load(fabwide_settings_data)
 
-if 'infraSetPol' not in infraSetPol:
+if 'infraSetPol' not in fabwide_settings_raw:
    subnet_check = 'N/A'
    dis_remote_ep = 'N/A'
 for item in fabwide_settings_raw:    
