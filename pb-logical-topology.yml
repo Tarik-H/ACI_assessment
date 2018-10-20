@@ -198,8 +198,8 @@
   - name: Verify fabric settings 'Disable remote EP learning on Bleaf' and 'Enforce subnet check'
     aci_rest:
       host: "{{apic_ip}}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
       validate_certs: no
       method: get
       output_level: debug
