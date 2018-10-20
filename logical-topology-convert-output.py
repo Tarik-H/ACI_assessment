@@ -1012,7 +1012,13 @@ def create_excel(excel_file, tenants):
            ws3.write(row_num, column, setting, red_cell)
     conditionals(ipaging, 'enabled', 'disabled', 1, 2)
     conditionals(mcp, 'enabled', 'disabled', 1, 3)
-    conditionals(dis_remote_ep, 'enabled', 'disabled', 1, 0)
+    #conditionals(dis_remote_ep, 'enabled', 'disabled', 1, 0)
+    if dis_remote_ep == 'enabled':
+       ws3.write(1, 0, dis_remote_ep, green_cell)
+    elif dis_remote_ep == 'disabled':
+       ws3.write(1, 0, dis_remote_ep, red_cell)
+    elif dis_remote_ep == 'N/A':
+       ws3.write(1, 0, dis_remote_ep)
     if subnet_check == 'enabled':
        ws3.write(1, 1, subnet_check, green_cell)
     elif subnet_check == 'disabled':
