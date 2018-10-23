@@ -1,0 +1,50 @@
+- defaultTab: summary
+  description: ''
+  executionEnabled: true
+  id: f1a28bdb-e378-403a-b4fb-81b7c03fd9ab
+  loglevel: INFO
+  name: Gather-ACI-data
+  nodeFilterEditable: false
+  options:
+  - label: 'Enter APIC IP:'
+    name: apic_ip
+    regex: \A(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\z
+    required: true
+  - label: Enter APIC username
+    name: apic_user
+    required: true
+    secure: true
+    valueExposed: true
+  - label: Enter APIC password
+    name: apic_pass
+    required: true
+    secure: true
+    valueExposed: true
+  - label: 'Enter the email address you would like to send to:'
+    name: email
+  - label: (Optional)
+    name: pass_gmail
+    secure: true
+    storagePath: keys/insight/gmail
+    valueExposed: true
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - configuration:
+        ansible-base-dir-path: /var/rundeck/projects/ACI-Data-Gathering/scm
+        ansible-become: 'false'
+        ansible-disable-limit: 'false'
+        ansible-extra-vars: |+
+          apic_ip: ${option.apic_ip}
+          apic_user: ${option.apic_user}
+          apic_pass: ${option.apic_pass}
+          jobmail: ${option.email}
+          pass_gmail: ${option.pass_gmail}
+
+        ansible-playbook: pb-logical-topology.yml
+      nodeStep: false
+      type: com.batix.rundeck.plugins.AnsiblePlaybookWorkflowStep
+    keepgoing: false
+    strategy: node-first
+  uuid: f1a28bdb-e378-403a-b4fb-81b7c03fd9ab
+
