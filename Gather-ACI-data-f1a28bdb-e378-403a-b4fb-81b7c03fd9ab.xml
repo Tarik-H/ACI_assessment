@@ -14,7 +14,9 @@
         <option name='email'>
           <label>Enter the email address you would like to send to:</label>
         </option>
-        <option name='pass_gmail' secure='true' storagePath='keys/insight/gmail' valueExposed='true' />
+        <option name='pass_gmail' required='true' secure='true' storagePath='keys/insight/gmail' valueExposed='true'>
+          <label>(Optional)</label>
+        </option>
       </options>
     </context>
     <defaultTab>summary</defaultTab>
