@@ -301,9 +301,8 @@
        host: smtp.gmail.com
        port: 587
        username: acidata01@gmail.com
-       #password: "{{pass_gmail}}"
-       password: Inl@b2017!
-       #from: acidata01@gmail.com
+       password: "{{pass_gmail}}"
+       from: acidata01@gmail.com
        to: "{{jobmail}}"
        subject: ACI report
        body: 'Attached is the ACI data gathering'
