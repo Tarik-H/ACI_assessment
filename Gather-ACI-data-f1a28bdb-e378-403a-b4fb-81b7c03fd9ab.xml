@@ -5,16 +5,16 @@
         <option name='apic_ip' regex='\A(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\z' required='true'>
           <label>Enter APIC IP:</label>
         </option>
-        <option name='apic_user' required='true' secure='true' valueExposed='true'>
+        <option name='apic_user' required='true' secure='true' storagePath='keys/aci_deploy/aci_deploy_username' valueExposed='true'>
           <label>Enter APIC username</label>
         </option>
-        <option name='apic_pass' required='true' secure='true' valueExposed='true'>
+        <option name='apic_pass' required='true' secure='true' storagePath='keys/aci_deploy/aci_deploy_password' valueExposed='true'>
           <label>Enter APIC password</label>
         </option>
         <option name='email'>
           <label>Enter the email address you would like to send to:</label>
         </option>
-        <option name='pass_gmail' required='true' secure='true' storagePath='keys/insight/gmail' valueExposed='true'>
+        <option name='pass_gmail' secure='true' storagePath='keys/insight/gmail' valueExposed='true'>
           <label>(Optional)</label>
         </option>
       </options>
