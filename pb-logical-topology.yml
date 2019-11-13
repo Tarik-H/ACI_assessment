@@ -12,280 +12,280 @@
 
   tasks:
 
-  # #
-  # # Create new data directory
-  # #
-  # - name: Delete directories
-  #   file:
-  #     path: "./{{item}}"
-  #     state: absent
-  #   with_items:
-  #     - 'data'
-  #     - 'data'
+  #
+  # Create new data directory
+  #
+  - name: Delete directories
+    file:
+      path: "./{{item}}"
+      state: absent
+    with_items:
+      - 'data'
+      - 'data'
 
-  # - name: Create directories
-  #   file:
-  #     path: "./{{item}}"
-  #     state: directory
-  #   with_items:
-  #     - 'data'
-  #     - 'data/output'
+  - name: Create directories
+    file:
+      path: "./{{item}}"
+      state: directory
+    with_items:
+      - 'data'
+      - 'data/output'
 
-  # #
-  # # list of tenants
-  # #
-  # - name: Get a list of tenants from ACI
-  #   aci_tenant:
-  #     state: query
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #     use_proxy: no
-  #   #no_log: true
-  #   register: out
+  #
+  # list of tenants
+  #
+  - name: Get a list of tenants from ACI
+    aci_tenant:
+      state: query
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+      use_proxy: no
+    #no_log: true
+    register: out
 
-  # #
-  # # Write tenant information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}tenants-output.json"
+  #
+  # Write tenant information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}tenants-output.json"
 
-  # #
-  # # list of VRFs
-  # #
-  # - name: Get a list of VRFs from ACI
-  #   aci_vrf:
-  #     state: query
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   #no_log: true
-  #   register: out
+  #
+  # list of VRFs
+  #
+  - name: Get a list of VRFs from ACI
+    aci_vrf:
+      state: query
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    #no_log: true
+    register: out
 
-  # #
-  # # Write VRF information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}vrfs-output.json"
+  #
+  # Write VRF information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}vrfs-output.json"
 
-  # #
-  # # list of BDs
-  # #
-  # - name: Get a list of BDs from ACI, use modified aci_bd_mymodule module to include subnet information
-  #   aci_bd_mymodule:
-  #   #aci_bd:
-  #     state: query
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   #no_log: true
-  #   register: out
+  #
+  # list of BDs
+  #
+  - name: Get a list of BDs from ACI, use modified aci_bd_mymodule module to include subnet information
+    aci_bd_mymodule:
+    #aci_bd:
+      state: query
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    #no_log: true
+    register: out
 
-  # #
-  # # Write BD information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}bds-output.json"
+  #
+  # Write BD information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}bds-output.json"
     
-  # #
-  # # list of APs
-  # #
-  # - name: Get a list of APs from ACI
-  #   aci_ap:
-  #     state: query
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   #no_log: true
-  #   register: out
+  #
+  # list of APs
+  #
+  - name: Get a list of APs from ACI
+    aci_ap:
+      state: query
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    #no_log: true
+    register: out
 
-  # #
-  # # Write AP information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}aps-output.json"
+  #
+  # Write AP information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}aps-output.json"
 
-  # #
-  # # list of EPGs
-  # #
-  # - name: Get a list of EPGs from ACI, use modified aci_epg_mymodule module to get a list of static ports
-  #   aci_epg_mymodule:
-  #   #aci_epg:
-  #     state: query
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   #no_log: true
-  #   register: out
+  #
+  # list of EPGs
+  #
+  - name: Get a list of EPGs from ACI, use modified aci_epg_mymodule module to get a list of static ports
+    aci_epg_mymodule:
+    #aci_epg:
+      state: query
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    #no_log: true
+    register: out
 
-  # #
-  # # Write EPG information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}oldepgs-output.json"
+  #
+  # Write EPG information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}oldepgs-output.json"
 
-  # - name: Get a list OF EPG with static path
-  #   aci_rest:
-  #     method: get
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #     path: /api/node/class/fvAEPg.json?rsp-subtree=children&rsp-subtree-class=fvRsBd,fvRsPathAtt,fvSubnet
-  #   #no_log: true
-  #   register: resultat
+  - name: Get a list OF EPG with static path
+    aci_rest:
+      method: get
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+      path: /api/node/class/fvAEPg.json?rsp-subtree=children&rsp-subtree-class=fvRsBd,fvRsPathAtt,fvSubnet
+    #no_log: true
+    register: resultat
 
-  # #
-  # # Write tenant information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ resultat.imdata }}"
-  #     dest: "{{ data_dir }}epgs-output.json"
+  #
+  # Write tenant information to a file for processing later
+  #
+  - copy:
+      content: "{{ resultat.imdata }}"
+      dest: "{{ data_dir }}epgs-output.json"
 
-  # #
-  # # list of Provider Contracts
-  # #
-  # - name: Get a list of Provider Contracts from ACI
-  #   aci_epg_to_contract:
-  #     state: query
-  #     contract_type: provider
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   # no_log: true
-  #   register: out
+  #
+  # list of Provider Contracts
+  #
+  - name: Get a list of Provider Contracts from ACI
+    aci_epg_to_contract:
+      state: query
+      contract_type: provider
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    # no_log: true
+    register: out
 
-  # #
-  # # Write tenant information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}provider-contracts-output.json"
+  #
+  # Write tenant information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}provider-contracts-output.json"
 
-  # #
-  # # list of Consumer Contracts
-  # #
-  # - name: Get a list of Consumer Contracts from ACI
-  #   aci_epg_to_contract:
-  #     state: query
-  #     contract_type: consumer
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #   # no_log: true
-  #   register: out
+  #
+  # list of Consumer Contracts
+  #
+  - name: Get a list of Consumer Contracts from ACI
+    aci_epg_to_contract:
+      state: query
+      contract_type: consumer
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+    # no_log: true
+    register: out
 
-  # #
-  # # Write tenant information to a file for processing later
-  # #
-  # - copy:
-  #     content: "{{ out.current }}"
-  #     dest: "{{ data_dir }}consumer-contracts-output.json"
-
-
-  # - name: Verify fabric settings 'Disable remote EP learning on Bleaf' and 'Enforce subnet check'
-  #   aci_rest:
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #     method: get
-  #     output_level: debug
-  #     path: /api/node/mo/uni/infra/settings.json
-  #   register: fabsettings
-  #   ignore_errors: yes
-
-  # - copy:
-  #     content: "{{ fabsettings.imdata }}"
-  #     dest: "{{ data_dir }}fabricwide-settings-output.json"
-  #   when: "'Error' not in fabsettings.response"
-
-  # - copy:
-  #     content: '[]'
-  #     dest: "{{ data_dir }}fabricwide-settings-output.json"
-  #   when: "'Error' in fabsettings.response"
-
-  # - name: Verify IP aging setting
-  #   aci_rest:
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #     method: get
-  #     output_level: debug
-  #     path: /api/node/mo/uni/infra/ipAgingP-default.json
-  #   register: ipag
-
-  # - copy:
-  #     content: "{{ ipag.imdata }}"
-  #     dest: "{{ data_dir }}ipaging-output.json"
-
-  # - name: Verify MCP setting
-  #   aci_rest:
-  #     host: "{{apic_ip}}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     validate_certs: no
-  #     method: get
-  #     output_level: debug
-  #     path: /api/node/mo/uni/infra/mcpInstP-default.json
-  #   register: mcp
-
-  # - copy:
-  #     content: "{{ mcp.imdata }}"
-  #     dest: "{{ data_dir }}mcp-output.json"
+  #
+  # Write tenant information to a file for processing later
+  #
+  - copy:
+      content: "{{ out.current }}"
+      dest: "{{ data_dir }}consumer-contracts-output.json"
 
 
-  # - name: Get a list OF L3outs
-  #   aci_rest:
-  #     method: get
-  #     hostname: "{{ apic_ip }}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     use_proxy: no
-  #     validate_certs: no
-  #     path: /api/node/class/l3extOut.json?rsp-subtree=full
-  #   #no_log: true
-  #   register: resultat
+  - name: Verify fabric settings 'Disable remote EP learning on Bleaf' and 'Enforce subnet check'
+    aci_rest:
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+      method: get
+      output_level: debug
+      path: /api/node/mo/uni/infra/settings.json
+    register: fabsettings
+    ignore_errors: yes
 
-  # - copy: 
-  #     content: "{{ resultat.imdata }}" 
-  #     dest: "{{ data_dir }}l3outs-output.json"
+  - copy:
+      content: "{{ fabsettings.imdata }}"
+      dest: "{{ data_dir }}fabricwide-settings-output.json"
+    when: "'Error' not in fabsettings.response"
 
-  # - name: Get a list of Physical interfaces errors
-  #   aci_rest:
-  #     method: get
-  #     hostname: "{{ apic_ip }}"
-  #     username: "{{apic_user}}"
-  #     password: "{{apic_pass}}"
-  #     use_proxy: no
-  #     validate_certs: no
-  #     path: /api/node/class/l1PhysIf.json?rsp-subtree=full&rsp-subtree-class=rmonDot3Stats,rmonEtherStats,rmonIpIn,rmonIfOut
-  #   #no_log: true
-  #   register: resultat
+  - copy:
+      content: '[]'
+      dest: "{{ data_dir }}fabricwide-settings-output.json"
+    when: "'Error' in fabsettings.response"
 
-  # - copy: 
-  #     content: "{{ resultat.imdata }}"
-  #     dest: "{{ data_dir }}interf-errors-output.json"
+  - name: Verify IP aging setting
+    aci_rest:
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+      method: get
+      output_level: debug
+      path: /api/node/mo/uni/infra/ipAgingP-default.json
+    register: ipag
 
-  # - name: run excel report generation script
-  #   command: python logical-topology-convert-output.py
-  #   args:
-  #     # chdir: "{{ role_path }}"/files
-  #   delegate_to: 127.0.0.1
-  #   run_once: true
+  - copy:
+      content: "{{ ipag.imdata }}"
+      dest: "{{ data_dir }}ipaging-output.json"
+
+  - name: Verify MCP setting
+    aci_rest:
+      host: "{{apic_ip}}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      validate_certs: no
+      method: get
+      output_level: debug
+      path: /api/node/mo/uni/infra/mcpInstP-default.json
+    register: mcp
+
+  - copy:
+      content: "{{ mcp.imdata }}"
+      dest: "{{ data_dir }}mcp-output.json"
+
+
+  - name: Get a list OF L3outs
+    aci_rest:
+      method: get
+      hostname: "{{ apic_ip }}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      use_proxy: no
+      validate_certs: no
+      path: /api/node/class/l3extOut.json?rsp-subtree=full
+    #no_log: true
+    register: resultat
+
+  - copy: 
+      content: "{{ resultat.imdata }}" 
+      dest: "{{ data_dir }}l3outs-output.json"
+
+  - name: Get a list of Physical interfaces errors
+    aci_rest:
+      method: get
+      hostname: "{{ apic_ip }}"
+      username: "{{apic_user}}"
+      password: "{{apic_pass}}"
+      use_proxy: no
+      validate_certs: no
+      path: /api/node/class/l1PhysIf.json?rsp-subtree=full&rsp-subtree-class=rmonDot3Stats,rmonEtherStats,rmonIpIn,rmonIfOut
+    #no_log: true
+    register: resultat
+
+  - copy: 
+      content: "{{ resultat.imdata }}"
+      dest: "{{ data_dir }}interf-errors-output.json"
+
+  - name: run excel report generation script
+    command: python logical-topology-convert-output.py
+    args:
+      # chdir: "{{ role_path }}"/files
+    delegate_to: 127.0.0.1
+    run_once: true
 
   - name: Verify the report file exists
     stat: 
