@@ -83,7 +83,7 @@
       username: "{{apic_user}}"
       password: "{{apic_pass}}"
       validate_certs: no
-    no_log: true
+    #no_log: true
     register: out
 
   #
@@ -103,7 +103,7 @@
       username: "{{apic_user}}"
       password: "{{apic_pass}}"
       validate_certs: no
-    no_log: true
+    #no_log: true
     register: out
 
   #
@@ -124,7 +124,7 @@
       username: "{{apic_user}}"
       password: "{{apic_pass}}"
       validate_certs: no
-    no_log: true
+    #no_log: true
     register: out
 
   #
