@@ -1284,7 +1284,7 @@ for item in ipaging_raw:
     for key, value in item['epIpAgingP']['attributes'].iteritems():
         if key == 'adminSt':
            ipaging = value
-print "content of ipaging is: {}".format(ipaging)
+#print "content of ipaging is: {}".format(ipaging)
 
 with open(mcp_file) as mcp_data:
     mcp_raw = json.load(mcp_data)
@@ -1293,7 +1293,7 @@ for item in mcp_raw:
     for key, value in item['mcpInstPol']['attributes'].iteritems():
         if key == 'adminSt':
            mcp = value
-print "content of mcp is: {}".format(mcp)
+#print "content of mcp is: {}".format(mcp)
 
 #########   Fabric settings data parsing
 #
@@ -1319,7 +1319,7 @@ for item in fabwide_settings_raw:
                 subnet_check = 'disabled'
     if 'enforceSubnetCheck' not in item['infraSetPol']['attributes']:
         subnet_check = 'N/A'       
-print "content of remote ep is: {}".format(dis_remote_ep)
+#print "content of remote ep is: {}".format(dis_remote_ep)
 
 ################  L3Out data parsing
 #
